@@ -10,9 +10,9 @@ namespace SeleniumXunit.Tests.Admin;
 
 public class ReportTests : IClassFixture<BaseTest>, IDisposable
 {
-    private CreateRoomOutput _createRoomOutput;
-    private CreateBookingInput _bookingInput;
-    private BaseTest _baseTest;
+    private readonly CreateRoomOutput _createRoomOutput;
+    private readonly CreateBookingInput _bookingInput;
+    private readonly BaseTest _baseTest;
 
     public ReportTests(BaseTest baseTest)
     {

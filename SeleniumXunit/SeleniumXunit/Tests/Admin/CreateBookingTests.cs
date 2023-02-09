@@ -1,5 +1,4 @@
-﻿using AngleSharp.Dom;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NsTestFrameworkApi.RestSharp;
 using NsTestFrameworkUI.Helpers;
 using RestSharp;
@@ -12,16 +11,16 @@ namespace SeleniumXunit.Tests.Admin
 {
     public class CreateBookingTests : IClassFixture<BaseTest>, IDisposable
     {
-        private CreateRoomOutput _createRoomOutput;
-        private User user = new();
-        private Room room;
-        private BaseTest _baseTest;
+        private readonly CreateRoomOutput _createRoomOutput;
+        private readonly User _user = new();
+        private readonly Room _room;
+        private readonly BaseTest _baseTest;
 
         public CreateBookingTests(BaseTest baseTest)
         {
             _baseTest = baseTest;
             _createRoomOutput = _baseTest.Client.CreateRoom();
-            room = new Room
+            _room = new Room
             {
                 RoomName = _createRoomOutput.roomName.ToString()
             };
@@ -39,10 +38,10 @@ namespace SeleniumXunit.Tests.Admin
             Pages.ReportPage.Book();
             Pages.ReportPage.IsErrorMessageDisplayed().Should().BeTrue();
 
-            Pages.ReportPage.InsertBookingDetails(user, room);
+            Pages.ReportPage.InsertBookingDetails(_user, _room);
             Pages.ReportPage.Book();
 
-            var bookingName = $"{user.FirstName} {user.LastName}";
+            var bookingName = $"{_user.FirstName} {_user.LastName}";
             Pages.ReportPage.IsBookingDisplayed(bookingName, _createRoomOutput.roomName).Should().BeTrue();
         }
 

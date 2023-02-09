@@ -10,8 +10,8 @@ namespace SeleniumXunit.Tests.Book;
 
 public class BookingFormTests : IClassFixture<BaseTest>, IDisposable
 {
-    private CreateRoomOutput _createRoomOutput;
-    private BaseTest _baseTest;
+    private readonly CreateRoomOutput _createRoomOutput;
+    private readonly BaseTest _baseTest;
 
     public BookingFormTests(BaseTest baseTest)
     {
