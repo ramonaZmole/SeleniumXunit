@@ -5,7 +5,7 @@ using SeleniumXunit.Helpers.Models.ApiModels;
 
 namespace SeleniumXunit.Helpers;
 
-public static class ApiHelpers
+public static class HttpClientExtensions
 {
     public static string GetLoginToken(this RestClient client)
     {

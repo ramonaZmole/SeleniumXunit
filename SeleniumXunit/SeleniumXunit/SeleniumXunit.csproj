@@ -12,8 +12,8 @@
     <PackageReference Include="Faker.Net" Version="2.0.154" />
     <PackageReference Include="FluentAssertions.Json" Version="6.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
-    <PackageReference Include="NsTestFrameworkApi" Version="1.23.209.2" />
-    <PackageReference Include="NsTestFrameworkUI" Version="1.23.209.1" />
+    <PackageReference Include="NsTestFrameworkApi" Version="1.23.214.1" />
+    <PackageReference Include="NsTestFrameworkUI" Version="1.23.214.1" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="110.0.5481.7700" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
