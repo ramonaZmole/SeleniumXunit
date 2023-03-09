@@ -8,14 +8,14 @@ using SeleniumXunit.Helpers.Models.ApiModels;
 
 namespace SeleniumXunit.Tests.Book;
 
-public class BookingTests : IClassFixture<BaseTest>, IDisposable
+public class BookingTests : IDisposable
 {
     private readonly CreateRoomOutput _createRoomResponse;
     private readonly BaseTest _baseTest;
 
-    public BookingTests(BaseTest baseTest)
+    public BookingTests()
     {
-        _baseTest = baseTest;
+        _baseTest = new BaseTest();
         _createRoomResponse = _baseTest.Client.CreateRoom();
     }
 
@@ -44,6 +44,7 @@ public class BookingTests : IClassFixture<BaseTest>, IDisposable
 
     public void Dispose()
     {
+        _baseTest.Dispose();
         _baseTest.Client.CreateRequest($"{ApiResource.Room}{_createRoomResponse.roomid}", Method.DELETE);
     }
 }

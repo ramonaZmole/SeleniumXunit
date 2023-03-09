@@ -7,12 +7,15 @@ using SeleniumXunit.Helpers.Models.ApiModels;
 
 namespace SeleniumXunit.Tests.Admin;
 
-public class CreateRoomTests : IClassFixture<BaseTest>, IDisposable
+public class CreateRoomTests : IDisposable
 {
     private readonly Helpers.Models.Room _roomModel = new();
     private readonly BaseTest _baseTest;
 
-    public CreateRoomTests(BaseTest baseTest) => _baseTest = baseTest;
+    public CreateRoomTests()
+    {
+        _baseTest = new BaseTest();
+    }
 
     [Fact]
     public void WhenCreatingARoom_ThenItShouldBeCreatedTest()
@@ -47,6 +50,7 @@ public class CreateRoomTests : IClassFixture<BaseTest>, IDisposable
 
     public void Dispose()
     {
+        _baseTest.Dispose();
         var response = _baseTest.Client.CreateRequest(ApiResource.Room);
         var roomsList = JsonConvert.DeserializeObject<GetRoomsOutput>(response.Content);
         if (roomsList == null) return;
