@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using NsTestFrameworkApi.RestSharp;
-using NsTestFrameworkUI.Helpers;
-using RestSharp;
-using SeleniumXunit.Helpers;
+﻿using SeleniumXunit.Helpers;
 using SeleniumXunit.Helpers.Models;
 using SeleniumXunit.Helpers.Models.ApiModels;
 
@@ -31,17 +27,17 @@ public class BookingFormTests : IClassFixture<BaseTest>, IDisposable
     {
         Browser.GoTo(Constants.Url);
 
-        Pages.HomePage.BookThisRoom(_createRoomOutput.description);
-        Pages.HomePage.BookRoom();
-        Pages.HomePage.GetErrorMessages().Should().BeEquivalentTo(Constants.FormErrorMessages);
+        Pages.Homepage.BookThisRoom(_createRoomOutput.description);
+        Pages.Homepage.BookRoom();
+        Pages.Homepage.GetErrorMessages().Should().BeEquivalentTo(Messages.FormErrorMessages);
 
-        Pages.HomePage.InsertBookingDetails(new User());
-        Pages.HomePage.BookRoom();
-        Pages.HomePage.GetErrorMessages()[0].Should().Be(Constants.AlreadyBookedErrorMessage);
+        Pages.Homepage.InsertBookingDetails(new User());
+        Pages.Homepage.BookRoom();
+        Pages.Homepage.GetErrorMessages()[0].Should().Be(Messages.AlreadyBookedErrorMessage);
     }
 
     public void Dispose()
     {
-        _baseTest.Client.CreateRequest($"{ApiResource.Room}{_createRoomOutput.roomid}", Method.DELETE);
+        _baseTest.Client.DeleteRoom(_createRoomOutput.roomid);
     }
 }

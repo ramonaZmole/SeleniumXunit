@@ -1,10 +1,7 @@
-﻿using FluentAssertions;
-using NsTestFrameworkApi.RestSharp;
-using NsTestFrameworkUI.Helpers;
-using RestSharp;
-using SeleniumXunit.Helpers;
+﻿using SeleniumXunit.Helpers;
 using SeleniumXunit.Helpers.Models;
 using SeleniumXunit.Helpers.Models.ApiModels;
+using SeleniumXunit.Helpers.Models.Enum;
 using Room = SeleniumXunit.Helpers.Models.Room;
 
 namespace SeleniumXunit.Tests.Admin
@@ -47,8 +44,7 @@ namespace SeleniumXunit.Tests.Admin
 
         public void Dispose()
         {
-            var t = _baseTest.Client.CreateRequest($"{ApiResource.Room}{_createRoomOutput.roomid}", Method.DELETE);
-
+            _baseTest.Client.DeleteRoom(_createRoomOutput.roomid);
         }
     }
 }

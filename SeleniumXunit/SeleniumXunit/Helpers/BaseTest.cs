@@ -1,6 +1,4 @@
 ﻿using System.Reflection;
-using NsTestFrameworkApi.RestSharp;
-using NsTestFrameworkUI.Helpers;
 using RestSharp;
 
 namespace SeleniumXunit.Helpers;

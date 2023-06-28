@@ -1,15 +1,11 @@
-﻿using FluentAssertions;
-using Newtonsoft.Json;
-using NsTestFrameworkApi.RestSharp;
-using NsTestFrameworkUI.Helpers;
-using SeleniumXunit.Helpers;
-using SeleniumXunit.Helpers.Models.ApiModels;
+﻿using SeleniumXunit.Helpers;
+using SeleniumXunit.Helpers.Models.Enum;
 
 namespace SeleniumXunit.Tests.Admin;
 
 public class CreateRoomTests : IDisposable
 {
-    private readonly Helpers.Models.Room _roomModel = new();
+    private Helpers.Models.Room _roomModel = new();
     private readonly BaseTest _baseTest;
 
     public CreateRoomTests()
@@ -17,8 +13,13 @@ public class CreateRoomTests : IDisposable
         _baseTest = new BaseTest();
     }
 
-    [Fact]
-    public void WhenCreatingARoom_ThenItShouldBeCreatedTest()
+    [InlineData(RoomType.Double)]
+    [InlineData(RoomType.Family)]
+    [InlineData(RoomType.Single)]
+    [InlineData(RoomType.Suite)]
+    [InlineData(RoomType.Twin)]
+    [Theory]
+    public void WhenCreatingARoom_ThenItShouldBeCreatedTest(RoomType roomType)
     {
         Browser.GoTo(Constants.AdminUrl);
 
@@ -29,6 +30,11 @@ public class CreateRoomTests : IDisposable
         var errorMessages = Pages.RoomPage.GetErrorMessages();
         errorMessages.Should().Contain("must be greater than or equal to 1");
         errorMessages.Should().Contain("Room name must be set");
+
+        _roomModel = new Helpers.Models.Room
+        {
+            Type = roomType.ToString()
+        };
 
         Pages.RoomPage.InsertRoomDetails(_roomModel);
         Pages.RoomPage.CreateRoom();
@@ -51,10 +57,7 @@ public class CreateRoomTests : IDisposable
     public void Dispose()
     {
         _baseTest.Dispose();
-        var response = _baseTest.Client.CreateRequest(ApiResource.Room);
-        var roomsList = JsonConvert.DeserializeObject<GetRoomsOutput>(response.Content);
-        if (roomsList == null) return;
-        var id = roomsList.rooms.First(x => x.roomName == int.Parse(_roomModel.RoomName)).roomid;
-        _baseTest.Client.CreateRequest($"{ApiResource.Room}{id}", RestSharp.Method.DELETE);
+
+        _baseTest.Client.DeleteRoom(_roomModel.RoomName);
     }
 }

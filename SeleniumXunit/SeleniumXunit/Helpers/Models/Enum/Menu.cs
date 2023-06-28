@@ -1,4 +1,4 @@
-﻿namespace SeleniumXunit.Helpers.Models;
+﻿namespace SeleniumXunit.Helpers.Models.Enum;
 
 public enum Menu
 {

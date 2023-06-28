@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using NsTestFrameworkApi.RestSharp;
-using NsTestFrameworkUI.Helpers;
-using RestSharp;
-using SeleniumXunit.Helpers;
+﻿using SeleniumXunit.Helpers;
 using SeleniumXunit.Helpers.Models;
 using SeleniumXunit.Helpers.Models.ApiModels;
 
@@ -24,10 +20,10 @@ public class BookingTests : IDisposable
     {
         Browser.GoTo(Constants.Url);
 
-        Pages.HomePage.BookThisRoom(_createRoomResponse.description);
-        Pages.HomePage.InsertBookingDetails(new User());
-        Pages.HomePage.BookRoom();
-        Pages.HomePage.IsSuccessMessageDisplayed().Should().BeTrue();
+        Pages.Homepage.BookThisRoom(_createRoomResponse.description);
+        Pages.Homepage.InsertBookingDetails(new User());
+        Pages.Homepage.BookRoom();
+        Pages.Homepage.IsSuccessMessageDisplayed().Should().BeTrue();
     }
 
     [Fact]
@@ -35,16 +31,16 @@ public class BookingTests : IDisposable
     {
         Browser.GoTo(Constants.Url);
 
-        Pages.HomePage.BookThisRoom(_createRoomResponse.description);
-        Pages.HomePage.InsertBookingDetails(new User());
-        Pages.HomePage.CancelBooking();
-        Pages.HomePage.IsBookingFormDisplayed().Should().BeFalse();
-        Pages.HomePage.IsCalendarDisplayed().Should().BeFalse();
+        Pages.Homepage.BookThisRoom(_createRoomResponse.description);
+        Pages.Homepage.InsertBookingDetails(new User());
+        Pages.Homepage.CancelBooking();
+        Pages.Homepage.IsBookingFormDisplayed().Should().BeFalse();
+        Pages.Homepage.IsCalendarDisplayed().Should().BeFalse();
     }
 
     public void Dispose()
     {
         _baseTest.Dispose();
-        _baseTest.Client.CreateRequest($"{ApiResource.Room}{_createRoomResponse.roomid}", Method.DELETE);
+        _baseTest.Client.DeleteRoom(_createRoomResponse.roomid);
     }
 }
